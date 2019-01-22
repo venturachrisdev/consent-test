@@ -6,7 +6,10 @@
     "@material-ui/core": "^3.9.0",
     "@material-ui/icons": "^3.0.2",
     "@types/react-redux": "^7.0.0",
+    "@types/react-router": "^4.4.3",
+    "@types/react-router-dom": "^4.3.1",
     "axios": "^0.18.0",
+    "axios-mock-adapter": "^1.16.0",
     "react": "^16.7.0",
     "react-dom": "^16.7.0",
     "react-helmet": "^5.2.0",
@@ -30,7 +33,9 @@
     "@types/node": "^10.12.18",
     "@types/react": "^16.7.20",
     "@types/react-dom": "^16.0.11",
+    "@types/redux-devtools-extension": "^2.13.2",
     "eslint": "^5.12.1",
+    "redux-devtools-extension": "^2.13.7",
     "tslint-config-airbnb": "^5.11.1",
     "typescript": "^3.2.4"
   }

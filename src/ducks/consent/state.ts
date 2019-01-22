@@ -1,19 +1,23 @@
-import ConsentFormEntity from "../../core/entities/ConsentFormEntity";
-import ConsentItemEntity from "../../core/entities/ConsentItemEntity";
+import UserEntity from '../../core/entities/UserEntity';
+import ItemEntity from '../../core/entities/ItemEntity';
 
 export interface IConsentState {
-  form: ConsentFormEntity;
-  items: ConsentItemEntity[];
+  form: UserEntity;
+  items: ItemEntity[];
   loading: boolean;
-  loaded: boolean;
+  created: boolean;
   error?: string;
+  users: UserEntity[];
 }
 
 export const consentInitialState: IConsentState = {
-  form: new ConsentFormEntity('', '', [
-    new ConsentItemEntity(1, 'Example item'),
-  ]),
-  items: [],
+  form: {
+    name: '',
+    email: '',
+    agreeTo: [],
+  },
+  items: [{ id: 1, text: 'Example item' }],
   loading: false,
-  loaded: false,
+  created: false,
+  users: [],
 };

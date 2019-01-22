@@ -1,71 +1,114 @@
 import * as React from 'react';
 import {
-  FormControlLabel,
   TextField,
   Checkbox,
   Button,
+  Grid,
+  withStyles,
+  Typography,
+  ListItem,
+  List,
+  ListItemText,
+  ListItemSecondaryAction,
 } from '@material-ui/core';
+import ItemEntity from 'src/core/entities/ItemEntity';
+import styles from './styles';
 
 interface ConsentFormProps {
-  onSubmit?: () => {};
+  name: string;
+  email: string;
   consentOptions: any[];
-  onOptionChecked: (id: string, checked: boolean) => void;
+  selectedItems: ItemEntity[];
+  onChangeName: (ev: React.ChangeEvent) => void;
+  onChangeEmail: (ev: React.ChangeEvent) => void;
+  onOptionChecked: (ev: React.ChangeEvent) => void;
+  onSubmit?: (ev: React.FormEvent) => void;
+  classes?: any;
 }
 
 const consentForm: React.FunctionComponent<ConsentFormProps> = (props: ConsentFormProps) => {
-  const { onSubmit, consentOptions, onOptionChecked } = props;
-
-  const onChecked = (ev: React.ChangeEvent<HTMLInputElement>) => {
-    const { value, checked } = ev.target;
-    onOptionChecked(value, checked);
-  };
 
   const renderFields = () => {
     return (
-      <>
-        <TextField
-          id={'userName'}
-          label={'Name'}
-        />
+      <Grid
+        container={true}
+        justify={'center'}
+        spacing={24}
+        className={props.classes.fields}
+      >
+        <Grid item={true}>
+          <TextField
+            id={'userName'}
+            label={'Name'}
+            value={props.name}
+            onChange={props.onChangeName}
+          />
+        </Grid>
+        <Grid item={true}>
         <TextField
           id={'userEmail'}
-          label={'Email'}
+          label={'Email address'}
           type={'email'}
+          value={props.email}
+          onChange={props.onChangeEmail}
         />
-      </>
+        </Grid>
+      </Grid>
     );
   };
 
   const renderConsentOptions = () => {
-    return consentOptions && consentOptions.map((consent, i) => {
-      return (
-        <FormControlLabel
-          key={i}
-          control={<Checkbox value={`${consent.id}`} onChange={onChecked}/>}
-          label={consent.text}
+    return props.consentOptions && props.consentOptions.map((consent, i) => {
+      const checked = props.selectedItems.indexOf(consent) !== -1;
+      const control = (
+        <Checkbox
+          value={`${consent.id}`}
+          onChange={props.onOptionChecked}
+          checked={checked}
         />
+      );
+      return (
+        <ListItem key={i}>
+          <ListItemText>{consent.text}</ListItemText>
+          <ListItemSecondaryAction>{control}</ListItemSecondaryAction>
+        </ListItem>
       );
     });
   };
 
+  const shouldButtonBeDisabled = () => {
+    return props.selectedItems.length === 0 || props.email.length === 0 || props.name.length === 0;
+  };
+
   const renderSubmitButton = () => {
     return (
-      <Button variant={'contained'} color={'primary'}>{'Give consent'}</Button>
+      <Button
+        variant={'contained'}
+        color={'primary'}
+        type={'submit'}
+        fullWidth={true}
+        disabled={shouldButtonBeDisabled()}
+        className={props.classes.btn}
+      >
+        {'Give consent'}
+      </Button>
     );
   };
 
   return (
-    <>
-      <form onSubmit={onSubmit}>
+    <Grid container={true} justify={'center'}>
+      <form onSubmit={props.onSubmit}>
         {renderFields()}
-        <p>I agree to:</p>
-        <div>
+        <Typography align={'center'} variant={'h6'}>I agree to:</Typography>
+        <List>
           {renderConsentOptions()}
-        </div>
-        {renderSubmitButton()}
+        </List>
+        <Grid item={true}>
+          {renderSubmitButton()}
+        </Grid>
       </form>
-    </>
+    </Grid>
   );
 };
 
-export default consentForm;
+export default withStyles(styles)(consentForm);
