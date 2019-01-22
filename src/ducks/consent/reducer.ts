@@ -2,7 +2,7 @@ import ItemEntity from 'src/core/entities/ItemEntity';
 import {
   ADD_CONSENT_OPTION,
   CHANGE_CONSENT_EMAIL,
-  CHANGE_CONSENT_NAME, CREATE_CONSENT, CREATE_CONSENT_FAILED, CREATE_CONSENT_SUCCESS,
+  CHANGE_CONSENT_NAME, CHANGE_PAGE, CREATE_CONSENT, CREATE_CONSENT_FAILED, CREATE_CONSENT_SUCCESS,
   FETCH_CONSENT_ITEMS,
   FETCH_CONSENT_ITEMS_FAIL,
   FETCH_CONSENT_ITEMS_SUCCESS,
@@ -13,7 +13,7 @@ import {
 
 import {
   ChangeConsentEmail,
-  ChangeConsentName,
+  ChangeConsentName, ChangePageAction,
   ConsentAction,
   CreateConsentFail,
   FetchConsentItemsFail,
@@ -23,6 +23,17 @@ import {
   SelectConsentOption,
 } from './actions';
 import { consentInitialState, IConsentState } from './state';
+
+const ITEMS_PER_PAGE: number = 2;
+
+const calculateOffset = (currentPage: any) => (currentPage - 1) * ITEMS_PER_PAGE;
+
+const getPaginatedData = (data: any[], currentPage: number) => {
+  const offset = calculateOffset(currentPage);
+  return data.slice(offset, offset + ITEMS_PER_PAGE);
+};
+
+const getTotalPages = (data: any[]) => Math.round(data.length / ITEMS_PER_PAGE);
 
 const onFetchingConsentItems = (state: IConsentState): IConsentState => {
   state.loading = true;
@@ -96,7 +107,14 @@ const onFetchingConsentList = (state: IConsentState): IConsentState => {
 const onFetchConsentList = (state: IConsentState,
                             action: FetchConsentListSuccess): IConsentState => {
   state.loading = false;
+  // Default pagination
   state.users = action.payload;
+  const users = getPaginatedData(state.users, state.pagination.currentPage);
+  state.pagination = {
+    ...state.pagination,
+    usersPaginated: users,
+    totalPages: getTotalPages(state.users),
+  };
   return state;
 };
 
@@ -125,6 +143,21 @@ const onCreateConsentFail = (state: IConsentState,
   return state;
 };
 
+const onChangePage = (state: IConsentState,
+                      action: ChangePageAction): IConsentState => {
+  const newPage = action.payload;
+  const { totalPages } = state.pagination;
+  if (newPage > 0 && newPage <= totalPages) {
+    const users = getPaginatedData(state.users, newPage);
+    state.pagination = {
+      ...state.pagination,
+      usersPaginated: users,
+      currentPage: newPage,
+    };
+  }
+  return state;
+};
+
 const actionHandlers = {};
 actionHandlers[FETCH_CONSENT_ITEMS] = onFetchingConsentItems;
 actionHandlers[FETCH_CONSENT_ITEMS_SUCCESS] = onFetchConsentItems;
@@ -139,6 +172,7 @@ actionHandlers[FETCH_CONSENT_LIST_FAIL] = onFetchConsentListFail;
 actionHandlers[CREATE_CONSENT] = onCreatingConsent;
 actionHandlers[CREATE_CONSENT_SUCCESS] = onCreateConsent;
 actionHandlers[CREATE_CONSENT_FAILED] = onCreateConsentFail;
+actionHandlers[CHANGE_PAGE] = onChangePage;
 
 const reducer = (state: IConsentState = consentInitialState,
                  action: ConsentAction): IConsentState => {

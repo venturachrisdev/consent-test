@@ -8,6 +8,11 @@ export interface IConsentState {
   created: boolean;
   error?: string;
   users: UserEntity[];
+  pagination: {
+    usersPaginated: UserEntity[],
+    currentPage: number,
+    totalPages: number,
+  };
 }
 
 export const consentInitialState: IConsentState = {
@@ -20,4 +25,9 @@ export const consentInitialState: IConsentState = {
   loading: false,
   created: false,
   users: [],
+  pagination: {
+    usersPaginated: [],
+    currentPage: 1,
+    totalPages: 1,
+  },
 };

@@ -6,8 +6,10 @@ import * as ConsentActions from '../../ducks/consent/operations';
 
 const mapStateToProps = ({ consent }: IAppState) => {
   return {
-    users: consent.users,
+    users: consent.pagination.usersPaginated,
     loading: consent.loading,
+    currentPage: consent.pagination.currentPage,
+    totalPages: consent.pagination.totalPages,
   };
 };
 

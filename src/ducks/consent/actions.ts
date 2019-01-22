@@ -9,7 +9,11 @@ import {
   REMOVE_CONSENT_OPTION,
   FETCH_CONSENT_LIST,
   FETCH_CONSENT_LIST_SUCCESS,
-  FETCH_CONSENT_LIST_FAIL, CREATE_CONSENT_SUCCESS, CREATE_CONSENT, CREATE_CONSENT_FAILED,
+  FETCH_CONSENT_LIST_FAIL,
+  CREATE_CONSENT_SUCCESS,
+  CREATE_CONSENT,
+  CREATE_CONSENT_FAILED,
+  CHANGE_PAGE,
 } from './constants';
 import ItemEntity from '../../core/entities/ItemEntity';
 
@@ -89,9 +93,19 @@ export type CreateConsentAction = CreatingConsent
   | CreateConsentSuccess
   | CreateConsentFail;
 
+// Pagination
+
+export interface ChangePageAction {
+  type: CHANGE_PAGE;
+  payload: number;
+}
+
+export type PaginationAction = ChangePageAction;
+
 // Global
 
 export type ConsentAction = FetchConsentItemsAction
   | ChangeConsentFormAction
   | FetchConsentListAction
-  | CreateConsentAction;
+  | CreateConsentAction
+  | PaginationAction;

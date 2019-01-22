@@ -45,3 +45,8 @@ export type CREATE_CONSENT_SUCCESS = typeof CREATE_CONSENT_SUCCESS;
 
 export const CREATE_CONSENT_FAILED = 'CREATE_CONSENT_FAILED';
 export type CREATE_CONSENT_FAILED = typeof CREATE_CONSENT_FAILED;
+
+// Pagination
+
+export const CHANGE_PAGE = 'CHANGE_PAGE';
+export type CHANGE_PAGE = typeof CHANGE_PAGE;

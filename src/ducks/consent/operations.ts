@@ -2,14 +2,14 @@ import { Dispatch } from 'redux';
 import UserEntity from 'src/core/entities/UserEntity';
 import {
   ChangeConsentEmail,
-  ChangeConsentName, CreateConsentAction,
+  ChangeConsentName, ChangePageAction, CreateConsentAction,
   FetchConsentItemsAction, FetchConsentListAction,
   SelectConsentOption,
 } from './actions';
 import {
   ADD_CONSENT_OPTION,
   CHANGE_CONSENT_EMAIL,
-  CHANGE_CONSENT_NAME, CREATE_CONSENT, CREATE_CONSENT_FAILED, CREATE_CONSENT_SUCCESS,
+  CHANGE_CONSENT_NAME, CHANGE_PAGE, CREATE_CONSENT, CREATE_CONSENT_FAILED, CREATE_CONSENT_SUCCESS,
   FETCH_CONSENT_ITEMS,
   FETCH_CONSENT_ITEMS_SUCCESS,
   FETCH_CONSENT_LIST, FETCH_CONSENT_LIST_FAIL,
@@ -107,6 +107,15 @@ export const createConsent = (user: UserEntity) => {
     }).catch((err) => {
       console.log(err);
       dispatch({ type: CREATE_CONSENT_FAILED, error: err });
+    });
+  };
+};
+
+export const changePage = (page: number) => {
+  return (dispatch: Dispatch<ChangePageAction>) => {
+    dispatch({
+      type: CHANGE_PAGE,
+      payload: page,
     });
   };
 };
