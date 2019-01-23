@@ -1,8 +1,8 @@
 import Home from './Home';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import * as ConsentOperations from '../../ducks/consent/operations';
-import IAppState from '../../store/IAppState';
+import * as ConsentOperations from 'src/ducks/consent/operations';
+import IAppState from 'src/store/IAppState';
 
 const mapStateToProps = ({ consent }: IAppState) => {
   return {

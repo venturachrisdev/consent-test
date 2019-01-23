@@ -59,6 +59,7 @@ const consentForm: React.FunctionComponent<ConsentFormProps> = (props: ConsentFo
 
   const renderConsentOptions = () => {
     return props.consentOptions && props.consentOptions.map((consent, i) => {
+      // Check is marked as a selected item
       const checked = props.selectedItems.indexOf(consent) !== -1;
       const control = (
         <Checkbox
@@ -77,6 +78,7 @@ const consentForm: React.FunctionComponent<ConsentFormProps> = (props: ConsentFo
   };
 
   const shouldButtonBeDisabled = () => {
+    // if there are no selected items or there's no email or name.
     return props.selectedItems.length === 0 || props.email.length === 0 || props.name.length === 0;
   };
 

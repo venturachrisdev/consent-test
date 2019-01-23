@@ -10,6 +10,7 @@ import {
   FETCH_CONSENT_LIST_SUCCESS,
   REMOVE_CONSENT_OPTION,
 } from 'src/ducks/consent/constants';
+import { getTotalPages } from 'src/ducks/consent/selectors';
 
 import {
   ChangeConsentEmail,
@@ -23,17 +24,6 @@ import {
   SelectConsentOption,
 } from './actions';
 import { consentInitialState, IConsentState } from './state';
-
-const ITEMS_PER_PAGE: number = 2;
-
-const calculateOffset = (currentPage: any) => (currentPage - 1) * ITEMS_PER_PAGE;
-
-const getPaginatedData = (data: any[], currentPage: number) => {
-  const offset = calculateOffset(currentPage);
-  return data.slice(offset, offset + ITEMS_PER_PAGE);
-};
-
-const getTotalPages = (data: any[]) => Math.round(data.length / ITEMS_PER_PAGE);
 
 const onFetchingConsentItems = (state: IConsentState): IConsentState => {
   state.loading = true;
@@ -107,14 +97,7 @@ const onFetchingConsentList = (state: IConsentState): IConsentState => {
 const onFetchConsentList = (state: IConsentState,
                             action: FetchConsentListSuccess): IConsentState => {
   state.loading = false;
-  // Default pagination
   state.users = action.payload;
-  const users = getPaginatedData(state.users, state.pagination.currentPage);
-  state.pagination = {
-    ...state.pagination,
-    usersPaginated: users,
-    totalPages: getTotalPages(state.users),
-  };
   return state;
 };
 
@@ -146,12 +129,10 @@ const onCreateConsentFail = (state: IConsentState,
 const onChangePage = (state: IConsentState,
                       action: ChangePageAction): IConsentState => {
   const newPage = action.payload;
-  const { totalPages } = state.pagination;
+  const totalPages = getTotalPages(state.users);
   if (newPage > 0 && newPage <= totalPages) {
-    const users = getPaginatedData(state.users, newPage);
     state.pagination = {
       ...state.pagination,
-      usersPaginated: users,
       currentPage: newPage,
     };
   }

@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import ItemEntity from '../../core/entities/ItemEntity';
-import UserEntity from '../../core/entities/UserEntity';
-import ConsentForm from '../../components/ConsentForm';
+import ItemEntity from 'src/core/entities/ItemEntity';
+import UserEntity from 'src/core/entities/UserEntity';
+import ConsentForm from 'src/components/ConsentForm';
 
 interface IHomeProps extends RouteComponentProps {
   fetchConsentItems: () => {};
@@ -16,6 +16,9 @@ interface IHomeProps extends RouteComponentProps {
   createConsent: (user: UserEntity) => void;
 }
 
+/**
+ * Home page component
+ */
 export default class Home extends React.PureComponent<IHomeProps> {
 
   componentDidMount(): void {
@@ -47,6 +50,10 @@ export default class Home extends React.PureComponent<IHomeProps> {
 
   componentDidUpdate(prevProps: Readonly<IHomeProps>): void {
     const { created, history } = this.props;
+    /*
+     * If the user consent was successfully created,
+     * go to /users page
+     */
     if (!prevProps.created && created) {
       history.push('/users');
     }

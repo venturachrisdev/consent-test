@@ -24,46 +24,6 @@ const consent = [
     email: 'christian@mail.com',
     agreeTo: [agrees[1], agrees[2], agrees[3]],
   },
-  {
-    name: 'Christian',
-    email: 'christian@mail.com',
-    agreeTo: [agrees[1], agrees[2], agrees[3]],
-  },
-  {
-    name: 'Christian',
-    email: 'christian@mail.com',
-    agreeTo: [agrees[1], agrees[2], agrees[3]],
-  },
-  {
-    name: 'Christian',
-    email: 'christian@mail.com',
-    agreeTo: [agrees[1], agrees[2], agrees[3]],
-  },
-  {
-    name: 'Christian',
-    email: 'christian@mail.com',
-    agreeTo: [agrees[1], agrees[2], agrees[3]],
-  },
-  {
-    name: 'Christian',
-    email: 'christian@mail.com',
-    agreeTo: [agrees[1], agrees[2], agrees[3]],
-  },
-  {
-    name: 'Christian',
-    email: 'christian@mail.com',
-    agreeTo: [agrees[1], agrees[2], agrees[3]],
-  },
-  {
-    name: 'Christian',
-    email: 'christian@mail.com',
-    agreeTo: [agrees[1], agrees[2], agrees[3]],
-  },
-  {
-    name: 'Christian',
-    email: 'christian@mail.com',
-    agreeTo: [agrees[1], agrees[2], agrees[3]],
-  },
 ];
 
 // POST:  /consents
@@ -71,7 +31,6 @@ mock.onPost('/consents').reply((request: any): any => {
   const data = JSON.parse(request.data);
   const body = data.body;
   if (body) {
-    console.log(body);
     body.agreeTo = body.agreeTo.map((id: number) => agrees[id]);
     consent.push(body);
     return [201, { created: true }];

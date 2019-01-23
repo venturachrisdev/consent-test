@@ -1,5 +1,5 @@
-import UserEntity from '../../core/entities/UserEntity';
-import ItemEntity from '../../core/entities/ItemEntity';
+import UserEntity from 'src/core/entities/UserEntity';
+import ItemEntity from 'src/core/entities/ItemEntity';
 
 export interface IConsentState {
   form: UserEntity;

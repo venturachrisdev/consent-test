@@ -1,6 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import * as React from 'react';
-import ItemEntity from 'src/core/entities/ItemEntity';
+import { joinConsents } from 'src/components/UserTable/userTableUtils';
 import UserEntity from 'src/core/entities/UserEntity';
 
 interface UserTableProps {
@@ -9,16 +9,11 @@ interface UserTableProps {
 
 const userTable: React.FunctionComponent<UserTableProps> = (props: UserTableProps) => {
 
-  const renderConsents = (consents: ItemEntity[]) => {
-    const texts = consents.map(consent => consent.text);
-    return texts.join(', ');
-  };
-
   const renderUser = (user: UserEntity, index: number) => (
     <TableRow key={index}>
       <TableCell>{user.name}</TableCell>
       <TableCell>{user.email}</TableCell>
-      <TableCell>{renderConsents(user.agreeTo)}</TableCell>
+      <TableCell>{joinConsents(user.agreeTo)}</TableCell>
     </TableRow>
   );
 

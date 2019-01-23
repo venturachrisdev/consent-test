@@ -11,27 +11,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../../components/Navbar';
 import { default as HomeIcon } from '@material-ui/icons/Home';
 import { default as ListIcon } from '@material-ui/icons/List';
-
-const drawerWidth = 300;
-
-const styles = () => ({
-  root: {
-    display: 'flex',
-  },
-  drawer: {
-    width: drawerWidth,
-    flexShrink: 0,
-  },
-  appBar: {
-    width: `calc(100% - ${drawerWidth}px)`,
-    marginLeft: drawerWidth,
-  },
-  content: {
-    marginTop: 80,
-    width: '100%',
-    padding: 20,
-  },
-});
+import styles from './styles';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -39,6 +19,7 @@ interface LayoutProps {
 }
 
 class Layout extends React.PureComponent<LayoutProps> {
+  // TODO: Move the drawer to a shared component
   render() {
     const { children, classes } = this.props;
     return (
