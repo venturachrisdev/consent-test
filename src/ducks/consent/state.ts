@@ -1,5 +1,5 @@
-import UserEntity from 'src/core/entities/UserEntity';
-import ItemEntity from 'src/core/entities/ItemEntity';
+import UserEntity from '../../core/entities/UserEntity';
+import ItemEntity from '../../core/entities/ItemEntity';
 
 export interface IConsentState {
   form: UserEntity;
@@ -9,9 +9,7 @@ export interface IConsentState {
   error?: string;
   users: UserEntity[];
   pagination: {
-    usersPaginated: UserEntity[],
     currentPage: number,
-    totalPages: number,
   };
 }
 
@@ -26,8 +24,6 @@ export const consentInitialState: IConsentState = {
   created: false,
   users: [],
   pagination: {
-    usersPaginated: [],
     currentPage: 1,
-    totalPages: 1,
   },
 };

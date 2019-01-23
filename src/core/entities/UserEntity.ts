@@ -1,4 +1,4 @@
-import ItemEntity from 'src/core/entities/ItemEntity';
+import ItemEntity from './ItemEntity';
 
 export default interface UserEntity {
   name: string;

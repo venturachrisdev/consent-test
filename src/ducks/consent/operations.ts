@@ -1,5 +1,5 @@
 import { Dispatch } from 'redux';
-import UserEntity from 'src/core/entities/UserEntity';
+import UserEntity from '../../core/entities/UserEntity';
 import {
   ChangeConsentEmail,
   ChangeConsentName, ChangePageAction, CreateConsentAction,
@@ -16,7 +16,7 @@ import {
   FETCH_CONSENT_LIST_SUCCESS,
   REMOVE_CONSENT_OPTION,
 } from './constants';
-import MockAdapter from 'src/core/utils/MockAdapter';
+import MockAdapter from '../../core/utils/MockAdapter';
 
 export const fetchConsentItems = () => {
   return (dispatch: Dispatch<FetchConsentItemsAction>) => {
@@ -68,14 +68,14 @@ export const selectConsentOption = (id: number, checked: boolean) => {
 };
 
 export const fetchConsents = () => {
-  return (dispatch: Dispatch<FetchConsentListAction>) => {
+  return async (dispatch: Dispatch<FetchConsentListAction>) => {
     const onError = (err: string) => ({
       type: FETCH_CONSENT_LIST_FAIL,
       error: err,
     });
     dispatch({ type: FETCH_CONSENT_LIST });
-    MockAdapter.get('/consents').then((response) => {
-      const data = response.data;
+    try {
+      const { data } = await MockAdapter.get('/consents');
       if (data && data.consents) {
         dispatch({
           type: FETCH_CONSENT_LIST_SUCCESS,
@@ -84,30 +84,32 @@ export const fetchConsents = () => {
       } else {
         onError('Error');
       }
-    }).catch(err => onError(err));
+    } catch (e) {
+      onError(e.message);
+    }
   };
 };
 
 export const createConsent = (user: UserEntity) => {
-  return (dispatch: Dispatch<CreateConsentAction>) => {
+  return async (dispatch: Dispatch<CreateConsentAction>) => {
     dispatch({ type: CREATE_CONSENT });
     const agreeTo = user.agreeTo.map(agree => agree.id);
-    MockAdapter.post('/consents', {
-      body: {
-        agreeTo,
-        name: user.name,
-        email: user.email,
-      },
-    }).then((response) => {
-      if (response.status === 201) {
+    try {
+      const { status } = await MockAdapter.post('/consents', {
+        body: {
+          agreeTo,
+          name: user.name,
+          email: user.email,
+        },
+      });
+      if (status === 201) {
         dispatch({ type: CREATE_CONSENT_SUCCESS });
       } else {
-        dispatch({ type: CREATE_CONSENT_FAILED, error: 'A meaningful error' });
+        dispatch({ type: CREATE_CONSENT_FAILED, error: 'Error saving this record' });
       }
-    }).catch((err) => {
-      console.log(err);
-      dispatch({ type: CREATE_CONSENT_FAILED, error: err });
-    });
+    } catch (e) {
+      dispatch({ type: CREATE_CONSENT_FAILED, error: e.message });
+    }
   };
 };
 

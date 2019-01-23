@@ -11,7 +11,7 @@ import {
   ListItemText,
   ListItemSecondaryAction,
 } from '@material-ui/core';
-import ItemEntity from 'src/core/entities/ItemEntity';
+import ItemEntity from '../../core/entities/ItemEntity';
 import styles from './styles';
 
 interface ConsentFormProps {

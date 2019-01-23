@@ -1,4 +1,5 @@
-import ItemEntity from 'src/core/entities/ItemEntity';
+import { getTotalPages } from '../../components/Pagination/paginationUtils';
+import ItemEntity from '../../core/entities/ItemEntity';
 import {
   ADD_CONSENT_OPTION,
   CHANGE_CONSENT_EMAIL,
@@ -9,9 +10,7 @@ import {
   FETCH_CONSENT_LIST, FETCH_CONSENT_LIST_FAIL,
   FETCH_CONSENT_LIST_SUCCESS,
   REMOVE_CONSENT_OPTION,
-} from 'src/ducks/consent/constants';
-import { getTotalPages } from 'src/ducks/consent/selectors';
-
+} from './constants';
 import {
   ChangeConsentEmail,
   ChangeConsentName, ChangePageAction,
@@ -116,6 +115,7 @@ const onCreatingConsent = (state: IConsentState): IConsentState => {
 
 const onCreateConsent = (state: IConsentState): IConsentState => {
   state.created = true;
+  state.loading = false;
   state.form = consentInitialState.form;
   return state;
 };
@@ -123,6 +123,8 @@ const onCreateConsent = (state: IConsentState): IConsentState => {
 const onCreateConsentFail = (state: IConsentState,
                              action: CreateConsentFail): IConsentState => {
   state.error = action.error;
+  state.loading = false;
+  state.created = false;
   return state;
 };
 
@@ -140,19 +142,24 @@ const onChangePage = (state: IConsentState,
 };
 
 const actionHandlers = {};
+// Fetch consent items
 actionHandlers[FETCH_CONSENT_ITEMS] = onFetchingConsentItems;
 actionHandlers[FETCH_CONSENT_ITEMS_SUCCESS] = onFetchConsentItems;
 actionHandlers[FETCH_CONSENT_ITEMS_FAIL] = onFetchConsentItemsError;
+// Consent form
 actionHandlers[CHANGE_CONSENT_EMAIL] = onChangeConsentEmail;
 actionHandlers[CHANGE_CONSENT_NAME] = onChangeConsentName;
 actionHandlers[ADD_CONSENT_OPTION] = onAddConsentOption;
 actionHandlers[REMOVE_CONSENT_OPTION] = onRemoveConsentOption;
+// Fetch consent list
 actionHandlers[FETCH_CONSENT_LIST] = onFetchingConsentList;
 actionHandlers[FETCH_CONSENT_LIST_SUCCESS] = onFetchConsentList;
 actionHandlers[FETCH_CONSENT_LIST_FAIL] = onFetchConsentListFail;
+// Create consent
 actionHandlers[CREATE_CONSENT] = onCreatingConsent;
 actionHandlers[CREATE_CONSENT_SUCCESS] = onCreateConsent;
 actionHandlers[CREATE_CONSENT_FAILED] = onCreateConsentFail;
+// Pagination
 actionHandlers[CHANGE_PAGE] = onChangePage;
 
 const reducer = (state: IConsentState = consentInitialState,

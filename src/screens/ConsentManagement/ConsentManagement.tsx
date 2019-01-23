@@ -1,9 +1,9 @@
 import { Grid } from '@material-ui/core';
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import UserEntity from 'src/core/entities/UserEntity';
+import UserEntity from '../../core/entities/UserEntity';
 import UserTable from '../../components/UserTable';
-import Pagination from 'src/components/Pagination';
+import Pagination from '../../components/Pagination';
 
 interface ConsentManagementProps extends RouteComponentProps {
   loading: boolean;

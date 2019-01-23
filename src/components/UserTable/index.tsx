@@ -1,7 +1,7 @@
 import { Paper, Table, TableBody, TableCell, TableHead, TableRow } from '@material-ui/core';
 import * as React from 'react';
-import { joinConsents } from 'src/components/UserTable/userTableUtils';
-import UserEntity from 'src/core/entities/UserEntity';
+import { joinConsents } from './userTableUtils';
+import UserEntity from '../../core/entities/UserEntity';
 
 interface UserTableProps {
   users: UserEntity[];

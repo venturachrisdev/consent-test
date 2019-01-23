@@ -1,4 +1,4 @@
-import UserEntity from 'src/core/entities/UserEntity';
+import UserEntity from '../../core/entities/UserEntity';
 import {
   FETCH_CONSENT_ITEMS,
   FETCH_CONSENT_ITEMS_SUCCESS,

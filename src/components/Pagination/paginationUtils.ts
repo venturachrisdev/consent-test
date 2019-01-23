@@ -5,12 +5,14 @@ export const ITEMS_PER_PAGE: number = 2;
 /**
  * This method is responsible for calculating the offset for pagination based on the current page
  * @param currentPage
+ * @param perPage
  * Ex:
  * calculateOffset(1) => 0
  * calculateOffset(2) => 2
  * calculateOffset(3) => 4
  */
-export const calculateOffset = (currentPage: any) => (currentPage - 1) * ITEMS_PER_PAGE;
+export const calculateOffset = (currentPage: any,
+                                perPage: number = ITEMS_PER_PAGE) => (currentPage - 1) * perPage;
 
 /**
  * This method is responsible for setting the range (min and max) of pages to print
@@ -38,4 +40,26 @@ export const getMinMaxRange = (currentPage: number, totalPages: number) => {
   }
 
   return [min, max];
+};
+
+/**
+ * This method return the portion of the data based on the limit and offset
+ * @param data
+ * @param offset
+ * @param perPage
+ */
+export const getPaginatedData = (data: any[],
+                                 offset: number,
+                                 perPage: number = ITEMS_PER_PAGE) => {
+  return data.slice(offset, offset + perPage);
+};
+
+/**
+ * This method returns the pages calculated by the data size and items per page
+ * @param data
+ * @param perPage
+ */
+export const getTotalPages = (data: any[],
+                              perPage: number = ITEMS_PER_PAGE) => {
+  return Math.ceil(data.length / perPage);
 };

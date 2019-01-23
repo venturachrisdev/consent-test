@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router';
-import ItemEntity from 'src/core/entities/ItemEntity';
-import UserEntity from 'src/core/entities/UserEntity';
-import ConsentForm from 'src/components/ConsentForm';
+import ItemEntity from '../../core/entities/ItemEntity';
+import UserEntity from '../../core/entities/UserEntity';
+import ConsentForm from '../../components/ConsentForm';
 
 interface IHomeProps extends RouteComponentProps {
   fetchConsentItems: () => {};

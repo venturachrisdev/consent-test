@@ -1,6 +1,6 @@
 import { Button, Grid } from '@material-ui/core';
 import * as React from 'react';
-import { getMinMaxRange, MAX_PAGINATION_RANGE } from 'src/components/Pagination/paginationUtils';
+import { getMinMaxRange, MAX_PAGINATION_RANGE } from './paginationUtils';
 
 interface PaginationProps {
   currentPage: number;
